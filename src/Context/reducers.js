@@ -6,14 +6,13 @@ import {
 } from "./actionTypes";
 
 const user = localStorage.getItem("currentUser")
-  ? JSON.parse(localStorage.getItem("currentUser")).user
+  ? JSON.parse(localStorage.getItem("currentUser"))
   : "";
 
 export const initialState = {
   user: "" || user,
   loading: false,
   errorMessage: null,
-  isLoggedin: false,
 };
 
 export const AuthReducer = (state = initialState, action) => {
@@ -27,13 +26,12 @@ export const AuthReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
-        isLoggedin: true,
+        errorMessage: "",
         loading: false,
       };
     case LOGOUT:
       return {
         ...state,
-        isLoggedin: false,
         user: "",
       };
 

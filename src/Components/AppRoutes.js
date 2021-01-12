@@ -11,12 +11,11 @@ const AppRoutes = ({
   ...rest
 }) => {
   const userDetails = useAuthState();
-
   return (
     <Route
       path={path}
       render={(props) =>
-        isPrivate && !userDetails.isLoggedin ? (
+        isPrivate && !userDetails.user ? (
           <Redirect to={{ pathname: "/login" }} />
         ) : (
           <Component {...props} />

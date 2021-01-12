@@ -1,4 +1,3 @@
-import React from "react";
 import Login from "../Pages/Login";
 import Answers from "../Pages/Answers";
 import Questions from "../Pages/Questions";

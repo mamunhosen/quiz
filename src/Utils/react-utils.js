@@ -32,6 +32,7 @@ export const useForm = (initialState = {}, callback, validate) => {
     const errorsObj = validate(values);
     if (Object.keys(errorsObj).length === 0) {
       callback(values);
+      setValues(initialState);
     } else {
       setErrors(errorsObj);
     }

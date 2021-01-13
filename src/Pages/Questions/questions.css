@@ -1,0 +1,101 @@
+.question-wrapper {
+  max-width: 90%;
+  margin: 36px auto 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.question-wrapper > * {
+  margin: 10px 0;
+}
+.add-question {
+  align-self: flex-end;
+  padding: 5px;
+  font-size: 18px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+.question__form {
+  display: grid;
+  grid-row-gap: 20px;
+}
+.question-submit--btn {
+  width: 100px;
+  background-color: rgb(0, 153, 255);
+  color: #fff;
+}
+.question-header {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+.question-header__serial {
+  flex: 0 0 10%;
+  font-size: 16px;
+  font-weight: bold;
+}
+.question-header__title {
+  flex: 0 1 60%;
+  font-size: 16px;
+  font-weight: bold;
+}
+.question-header__action {
+  flex: 0 0 30%;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.question {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+.question:first-child {
+  padding-top: 0px;
+}
+.question__serial {
+  flex: 0 0 10%;
+}
+.question__title {
+  flex: 0 1 60%;
+}
+.question__action {
+  flex: 0 0 30%;
+}
+.btn {
+  font-size: 14px;
+  padding: 4px;
+  color: #fff;
+  outline: 0;
+  border: none;
+  border-radius: 2px;
+}
+.btn--edit {
+  margin-right: 8px;
+  background: rgb(145, 145, 20);
+}
+.btn--delete {
+  background-color: red;
+}
+
+@media (min-width: 600px) {
+  .question-wrapper {
+    max-width: 60%;
+    margin: 50px auto 0;
+  }
+
+  .question-header__title {
+    flex: 0 1 70%;
+  }
+  .question-header__action {
+    flex: 0 0 20%;
+  }
+
+  .question__title {
+    flex: 0 1 70%;
+  }
+  .question__action {
+    flex: 0 0 20%;
+  }
+}

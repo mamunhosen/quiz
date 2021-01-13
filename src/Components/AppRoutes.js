@@ -11,16 +11,25 @@ const AppRoutes = ({
   ...rest
 }) => {
   const userDetails = useAuthState();
+
   return (
     <Route
       path={path}
-      render={(props) =>
-        isPrivate && !userDetails.user ? (
-          <Redirect to={{ pathname: "/login" }} />
-        ) : (
-          <Component {...props} />
-        )
-      }
+      render={(props) => {
+        if (isPrivate) {
+          if (!userDetails.user) {
+            return <Redirect to={{ pathname: "/login" }} />;
+          } else {
+            if (onlyAdmin && !userDetails.user.isAdmin) {
+              return <Redirect to={{ pathname: "/answers" }} />;
+            } else {
+              return <Component {...props} />;
+            }
+          }
+        } else {
+          return <Component {...props} />;
+        }
+      }}
       {...rest}
     />
   );

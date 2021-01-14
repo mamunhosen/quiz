@@ -8,6 +8,7 @@ import {
   ADD_QUESTION_IN_SUCCESS,
   ADD_QUESTION_IN_PROGRESS,
   ADD_QUESTION_IN_FAILURE,
+  DELETE_QUESTION,
   LOGOUT,
 } from "./actionTypes";
 import users from "../Users";
@@ -66,6 +67,19 @@ export async function addQuestion(dispatch, payload) {
       type: ADD_QUESTION_IN_FAILURE,
       error: "Something went wrong!! Please try again later",
     });
+  }
+}
+
+export async function deleteQuestion(dispatch, id) {
+  let questions = localStorage.getItem("questions")
+    ? JSON.parse(localStorage.getItem("questions"))
+    : [];
+  const deletableQues = questions.find((ques) => ques.id === id);
+  const deletableQuesIndex = questions.indexOf(deletableQues);
+  if (deletableQuesIndex > -1) {
+    questions.splice(deletableQuesIndex, 1);
+    localStorage.setItem("questions", JSON.stringify(questions));
+    dispatch({ type: DELETE_QUESTION, payload: questions });
   }
 }
 

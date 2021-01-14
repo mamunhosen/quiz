@@ -10,12 +10,13 @@ import {
 } from "../../Context";
 
 import "./questions.css";
+import Delete from "../../Components/Delete";
 
 const Questions = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useQuestionDispatch();
   const { loading, errorMessage, questions } = useQuestionState();
-  console.log(questions);
+
   const validateQuestionForm = (values) => {
     const errors = {};
     if (values.question === "") {
@@ -60,12 +61,12 @@ const Questions = () => {
               <div className="question__title">{question.title}</div>
               <div className="question__action">
                 <button className="btn btn--edit">Edit</button>
-                <button className="btn btn--delete">Delete</button>
+                <Delete id={question.id} />
               </div>
             </div>
           ))
         ) : (
-          <p className="no--result">No questions found!!!</p>
+          <p className="no--result">No questions added!!!</p>
         )}
       </div>
     </>

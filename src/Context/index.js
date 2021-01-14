@@ -1,4 +1,10 @@
-import { loginUser, getQuestions, addQuestion, logout } from "./actions";
+import {
+  loginUser,
+  getQuestions,
+  addQuestion,
+  deleteQuestion,
+  logout,
+} from "./actions";
 import {
   AuthProvider,
   useAuthDispatch,
@@ -18,5 +24,6 @@ export {
   loginUser,
   getQuestions,
   addQuestion,
+  deleteQuestion,
   logout,
 };

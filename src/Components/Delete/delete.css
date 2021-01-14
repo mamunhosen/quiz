@@ -1,0 +1,12 @@
+.btn {
+  font-size: 14px;
+  padding: 4px;
+  color: #fff;
+  outline: 0;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.btn--delete {
+  background-color: red;
+}

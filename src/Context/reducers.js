@@ -9,6 +9,7 @@ import {
   ADD_QUESTION_IN_FAILURE,
   ADD_QUESTION_IN_PROGRESS,
   ADD_QUESTION_IN_SUCCESS,
+  DELETE_QUESTION,
 } from "./actionTypes";
 
 const user = localStorage.getItem("currentUser")
@@ -94,6 +95,11 @@ export const QuestionReducer = (state = QuestionsState, action) => {
         ...state,
         loading: false,
         errorMessage: action.error,
+      };
+    case DELETE_QUESTION:
+      return {
+        ...state,
+        questions: action.payload,
       };
 
     default:

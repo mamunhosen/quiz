@@ -63,21 +63,6 @@
 .question__action {
   flex: 0 0 30%;
 }
-.btn {
-  font-size: 14px;
-  padding: 4px;
-  color: #fff;
-  outline: 0;
-  border: none;
-  border-radius: 2px;
-}
-.btn--edit {
-  margin-right: 8px;
-  background: rgb(145, 145, 20);
-}
-.btn--delete {
-  background-color: red;
-}
 
 @media (min-width: 600px) {
   .question-wrapper {

@@ -8,6 +8,9 @@ import {
   ADD_QUESTION_IN_SUCCESS,
   ADD_QUESTION_IN_PROGRESS,
   ADD_QUESTION_IN_FAILURE,
+  EDIT_QUESTION_IN_SUCCESS,
+  EDIT_QUESTION_IN_PROGRESS,
+  EDIT_QUESTION_IN_FAILURE,
   DELETE_QUESTION,
   LOGOUT,
 } from "./actionTypes";
@@ -65,6 +68,29 @@ export async function addQuestion(dispatch, payload) {
   } catch (error) {
     dispatch({
       type: ADD_QUESTION_IN_FAILURE,
+      error: "Something went wrong!! Please try again later",
+    });
+  }
+}
+
+export async function editQuestion(dispatch, payload) {
+  try {
+    dispatch({ type: EDIT_QUESTION_IN_PROGRESS });
+    let questions = localStorage.getItem("questions")
+      ? JSON.parse(localStorage.getItem("questions"))
+      : [];
+    questions = questions.map((question) => {
+      if (question.id === payload.id) {
+        question.title = payload.title;
+      }
+      return question;
+    });
+    localStorage.setItem("questions", JSON.stringify(questions));
+    dispatch({ type: EDIT_QUESTION_IN_SUCCESS, payload: questions });
+    return questions;
+  } catch (error) {
+    dispatch({
+      type: EDIT_QUESTION_IN_FAILURE,
       error: "Something went wrong!! Please try again later",
     });
   }

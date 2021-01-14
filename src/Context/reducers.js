@@ -9,6 +9,9 @@ import {
   ADD_QUESTION_IN_FAILURE,
   ADD_QUESTION_IN_PROGRESS,
   ADD_QUESTION_IN_SUCCESS,
+  EDIT_QUESTION_IN_FAILURE,
+  EDIT_QUESTION_IN_PROGRESS,
+  EDIT_QUESTION_IN_SUCCESS,
   DELETE_QUESTION,
 } from "./actionTypes";
 
@@ -91,6 +94,23 @@ export const QuestionReducer = (state = QuestionsState, action) => {
         loading: false,
       };
     case ADD_QUESTION_IN_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        errorMessage: action.error,
+      };
+    case EDIT_QUESTION_IN_PROGRESS:
+      return {
+        ...state,
+        loading: true,
+      };
+    case EDIT_QUESTION_IN_SUCCESS:
+      return {
+        ...state,
+        questions: action.payload,
+        loading: false,
+      };
+    case EDIT_QUESTION_IN_FAILURE:
       return {
         ...state,
         loading: false,

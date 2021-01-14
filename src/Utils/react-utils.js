@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-export const useForm = (initialState = {}, callback, validate) => {
+export const useForm = (
+  initialState = {},
+  callback,
+  validate,
+  clearField = true
+) => {
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState({});
 
@@ -32,12 +37,13 @@ export const useForm = (initialState = {}, callback, validate) => {
     const errorsObj = validate(values);
     if (Object.keys(errorsObj).length === 0) {
       callback(values);
-      setValues(initialState);
+      if (clearField) {
+        setValues(initialState);
+      }
     } else {
       setErrors(errorsObj);
     }
   };
-
   return {
     onChange,
     onSubmit,

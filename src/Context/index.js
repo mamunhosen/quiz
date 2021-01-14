@@ -2,6 +2,7 @@ import {
   loginUser,
   getQuestions,
   addQuestion,
+  editQuestion,
   deleteQuestion,
   logout,
 } from "./actions";
@@ -24,6 +25,7 @@ export {
   loginUser,
   getQuestions,
   addQuestion,
+  editQuestion,
   deleteQuestion,
   logout,
 };

@@ -8,9 +8,10 @@ import {
   useQuestionState,
   useQuestionDispatch,
 } from "../../Context";
+import Delete from "../../Components/Delete";
+import EditQuestion from "../../Components/EditQuestion";
 
 import "./questions.css";
-import Delete from "../../Components/Delete";
 
 const Questions = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,7 +61,7 @@ const Questions = () => {
               <div className="question__serial">{index + 1}</div>
               <div className="question__title">{question.title}</div>
               <div className="question__action">
-                <button className="btn btn--edit">Edit</button>
+                <EditQuestion id={question.id} question={question.title} />
                 <Delete id={question.id} />
               </div>
             </div>

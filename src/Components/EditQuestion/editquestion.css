@@ -1,0 +1,12 @@
+.btn {
+  font-size: 14px;
+  padding: 4px;
+  color: #fff;
+  outline: 0;
+  border: none;
+  border-radius: 2px;
+}
+.btn--edit {
+  margin-right: 8px;
+  background: rgb(145, 145, 20);
+}

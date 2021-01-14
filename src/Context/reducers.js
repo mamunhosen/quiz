@@ -13,6 +13,9 @@ import {
   EDIT_QUESTION_IN_PROGRESS,
   EDIT_QUESTION_IN_SUCCESS,
   DELETE_QUESTION,
+  LOAD_ANSWERS_IN_FAILURE,
+  LOAD_ANSWERS_IN_SUCCESS,
+  LOAD_ANSWERS_IN_PROGRESS,
 } from "./actionTypes";
 
 const user = localStorage.getItem("currentUser")
@@ -120,6 +123,37 @@ export const QuestionReducer = (state = QuestionsState, action) => {
       return {
         ...state,
         questions: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const AnswersState = {
+  answers: [],
+  loading: false,
+  errorMessage: null,
+};
+
+export const AnswerReducer = (state = AnswersState, action) => {
+  switch (action.type) {
+    case LOAD_ANSWERS_IN_PROGRESS:
+      return {
+        ...state,
+        loading: true,
+      };
+    case LOAD_ANSWERS_IN_SUCCESS:
+      return {
+        ...state,
+        answers: action.payload,
+        loading: false,
+      };
+    case LOAD_ANSWERS_IN_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        errorMessage: action.error,
       };
 
     default:

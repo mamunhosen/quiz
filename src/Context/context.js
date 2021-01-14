@@ -4,12 +4,16 @@ import {
   AuthReducer,
   QuestionsState,
   QuestionReducer,
+  AnswersState,
+  AnswerReducer,
 } from "./reducers";
 
 const AuthStateContext = React.createContext();
 const AuthDispatchContext = React.createContext();
 const QuestionContext = React.createContext();
 const QuestionDispatchContext = React.createContext();
+const AnswerContext = React.createContext();
+const AnswerDispatchContext = React.createContext();
 
 export function useAuthState() {
   return useContext(AuthStateContext);
@@ -25,6 +29,14 @@ export function useQuestionState() {
 
 export function useQuestionDispatch() {
   return useContext(QuestionDispatchContext);
+}
+
+export function useAnswerState() {
+  return useContext(AnswerContext);
+}
+
+export function useAnswerDispatch() {
+  return useContext(AnswerDispatchContext);
 }
 
 export const AuthProvider = ({ children }) => {
@@ -48,5 +60,17 @@ export const QuestionProvider = ({ children }) => {
         {children}
       </QuestionDispatchContext.Provider>
     </QuestionContext.Provider>
+  );
+};
+
+export const AnswerProvider = ({ children }) => {
+  const [answers, dispatch] = useReducer(AnswerReducer, AnswersState);
+
+  return (
+    <AnswerContext.Provider value={answers}>
+      <AnswerDispatchContext.Provider value={dispatch}>
+        {children}
+      </AnswerDispatchContext.Provider>
+    </AnswerContext.Provider>
   );
 };

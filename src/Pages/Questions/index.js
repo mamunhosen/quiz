@@ -46,7 +46,7 @@ const Questions = () => {
     getQuestions(dispatch);
   }, []);
 
-  const loadingMessage = <div className="loading">Loading images...</div>;
+  const loadingMessage = <div className="loading">Loading questions...</div>;
   const content = (
     <>
       <div className="question-header">
@@ -67,7 +67,7 @@ const Questions = () => {
             </div>
           ))
         ) : (
-          <p className="no--result">No questions added!!!</p>
+          <p className="no--result">No question added yet!!!</p>
         )}
       </div>
     </>

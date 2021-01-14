@@ -4,6 +4,9 @@ import {
   addQuestion,
   editQuestion,
   deleteQuestion,
+  getAnswers,
+  getQuizQuestions,
+  submitQuiz,
   logout,
 } from "./actions";
 import {
@@ -13,6 +16,9 @@ import {
   QuestionProvider,
   useQuestionDispatch,
   useQuestionState,
+  AnswerProvider,
+  useAnswerState,
+  useAnswerDispatch,
 } from "./context";
 
 export {
@@ -27,5 +33,11 @@ export {
   addQuestion,
   editQuestion,
   deleteQuestion,
+  AnswerProvider,
+  getAnswers,
+  useAnswerState,
+  useAnswerDispatch,
+  getQuizQuestions,
+  submitQuiz,
   logout,
 };

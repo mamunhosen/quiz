@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import AnswerHistory from "../../Components/AnswerHistory";
+import EditAnswer from "../../Components/EditAnswer";
 
 import PlayQuiz from "../../Components/PlayQuiz";
 import {
@@ -14,7 +16,6 @@ const Answers = () => {
   const dispatch = useAnswerDispatch();
   const { loading, answers } = useAnswerState();
   const { user } = useAuthState();
-
   useEffect(() => {
     const user_id = user.isAdmin ? "" : user.id;
     getAnswers(dispatch, user_id);
@@ -37,8 +38,12 @@ const Answers = () => {
               <div className="answer__title">{item.title}</div>
               <div className="answer__given">{item.answer}</div>
               <div className="answer__action">
-                <button disabled={user.id !== item.user_id}>Edit</button>
-                <button>Prev Answers</button>
+                <EditAnswer
+                  disabled={user.id !== item.user_id}
+                  answerObj={item}
+                  user={user}
+                />
+                <AnswerHistory histories={item.editHistories} />
               </div>
             </div>
           ))
@@ -51,7 +56,7 @@ const Answers = () => {
 
   return (
     <div className="answer-wrapper">
-      <PlayQuiz user={user} answerDispatch={dispatch} />
+      <PlayQuiz user={user} />
       {loading ? loadingMessage : content}
     </div>
   );

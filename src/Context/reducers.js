@@ -16,6 +16,15 @@ import {
   LOAD_ANSWERS_IN_FAILURE,
   LOAD_ANSWERS_IN_SUCCESS,
   LOAD_ANSWERS_IN_PROGRESS,
+  LOAD_QUIZES_IN_FAILURE,
+  LOAD_QUIZES_IN_SUCCESS,
+  LOAD_QUIZES_IN_PROGRESS,
+  ADD_QUIZ_IN_FAILURE,
+  ADD_QUIZ_IN_SUCCESS,
+  ADD_QUIZ_IN_PROGRESS,
+  EDIT_QUIZ_IN_FAILURE,
+  EDIT_QUIZ_IN_PROGRESS,
+  EDIT_QUIZ_IN_SUCCESS,
 } from "./actionTypes";
 
 const user = localStorage.getItem("currentUser")
@@ -134,6 +143,7 @@ export const AnswersState = {
   answers: [],
   loading: false,
   errorMessage: null,
+  quizes: [],
 };
 
 export const AnswerReducer = (state = AnswersState, action) => {
@@ -150,6 +160,59 @@ export const AnswerReducer = (state = AnswersState, action) => {
         loading: false,
       };
     case LOAD_ANSWERS_IN_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        errorMessage: action.error,
+      };
+    case LOAD_QUIZES_IN_PROGRESS:
+      return {
+        ...state,
+        loading: true,
+      };
+    case LOAD_QUIZES_IN_SUCCESS:
+      return {
+        ...state,
+        quizes: action.payload,
+        loading: false,
+      };
+    case LOAD_QUIZES_IN_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        errorMessage: action.error,
+      };
+
+    case ADD_QUIZ_IN_PROGRESS:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADD_QUIZ_IN_SUCCESS:
+      return {
+        ...state,
+        answers: action.payload.answers,
+        quizes: action.payload.quizes,
+        loading: false,
+      };
+    case ADD_QUIZ_IN_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        errorMessage: action.error,
+      };
+    case EDIT_QUIZ_IN_PROGRESS:
+      return {
+        ...state,
+        loading: true,
+      };
+    case EDIT_QUIZ_IN_SUCCESS:
+      return {
+        ...state,
+        answers: action.payload,
+        loading: false,
+      };
+    case EDIT_QUIZ_IN_FAILURE:
       return {
         ...state,
         loading: false,

@@ -7,6 +7,7 @@ import {
   getAnswers,
   getQuizQuestions,
   submitQuiz,
+  editAnswers,
   logout,
 } from "./actions";
 import {
@@ -39,5 +40,6 @@ export {
   useAnswerDispatch,
   getQuizQuestions,
   submitQuiz,
+  editAnswers,
   logout,
 };

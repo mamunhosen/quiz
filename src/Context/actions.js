@@ -15,6 +15,15 @@ import {
   LOAD_ANSWERS_IN_PROGRESS,
   LOAD_ANSWERS_IN_SUCCESS,
   LOAD_ANSWERS_IN_FAILURE,
+  LOAD_QUIZES_IN_PROGRESS,
+  LOAD_QUIZES_IN_SUCCESS,
+  LOAD_QUIZES_IN_FAILURE,
+  ADD_QUIZ_IN_FAILURE,
+  ADD_QUIZ_IN_PROGRESS,
+  ADD_QUIZ_IN_SUCCESS,
+  EDIT_QUIZ_IN_FAILURE,
+  EDIT_QUIZ_IN_PROGRESS,
+  EDIT_QUIZ_IN_SUCCESS,
   LOGOUT,
 } from "./actionTypes";
 import users from "../Users";
@@ -130,34 +139,92 @@ export async function getAnswers(dispatch, userId) {
   }
 }
 
-export async function getQuizQuestions(userId) {
-  const allQuestions = localStorage.getItem("questions")
-    ? JSON.parse(localStorage.getItem("questions"))
-    : [];
-  const allAnswers = localStorage.getItem("answers")
-    ? JSON.parse(localStorage.getItem("answers"))
-    : [];
-  const givenQuesIds = allAnswers.map((answer) => {
-    if (answer.user_id === userId) {
-      return answer.question_id;
-    }
-  });
-  const quizQuestions = allQuestions.filter(
-    (item) => !givenQuesIds.includes(item.id)
-  );
-  return quizQuestions;
+export async function getQuizQuestions(userId, dispatch) {
+  try {
+    dispatch({ type: LOAD_QUIZES_IN_PROGRESS });
+    const allQuestions = localStorage.getItem("questions")
+      ? JSON.parse(localStorage.getItem("questions"))
+      : [];
+    const allAnswers = localStorage.getItem("answers")
+      ? JSON.parse(localStorage.getItem("answers"))
+      : [];
+    const givenQuesIds = allAnswers.map((answer) => {
+      if (answer.user_id === userId) {
+        return answer.question_id;
+      }
+      return null;
+    });
+    const quizQuestions = allQuestions.filter(
+      (item) => !givenQuesIds.includes(item.id)
+    );
+    dispatch({ type: LOAD_QUIZES_IN_SUCCESS, payload: quizQuestions });
+  } catch (error) {
+    dispatch({
+      type: LOAD_QUIZES_IN_FAILURE,
+      error: "Something went wrong!! Please try again later",
+    });
+  }
 }
 
-export async function submitQuiz(payload) {
+export async function submitQuiz(payload, dispatch, user) {
   try {
+    dispatch({ type: ADD_QUIZ_IN_PROGRESS });
     let allAnswers = localStorage.getItem("answers")
       ? JSON.parse(localStorage.getItem("answers"))
       : [];
     allAnswers = [...allAnswers, ...payload];
     localStorage.setItem("answers", JSON.stringify(allAnswers));
+    if (!user.isAdmin) {
+      allAnswers = allAnswers.filter((answer) => answer.user_id === user.id);
+    }
+    const allQuestions = localStorage.getItem("questions")
+      ? JSON.parse(localStorage.getItem("questions"))
+      : [];
+    const givenQuesIds = allAnswers.map((answer) => {
+      if (answer.user_id === user.id) {
+        return answer.question_id;
+      }
+      return null;
+    });
+    const quizQuestions = allQuestions.filter(
+      (item) => !givenQuesIds.includes(item.id)
+    );
+    dispatch({
+      type: ADD_QUIZ_IN_SUCCESS,
+      payload: { answers: allAnswers, quizes: quizQuestions },
+    });
     return true;
   } catch (error) {
-    return false;
+    dispatch({
+      type: ADD_QUIZ_IN_FAILURE,
+      error: "Something went wrong!! Please try again later",
+    });
+  }
+}
+
+export async function editAnswers(payload, dispatch, userId) {
+  try {
+    dispatch({ type: EDIT_QUIZ_IN_PROGRESS });
+    let answers = localStorage.getItem("answers")
+      ? JSON.parse(localStorage.getItem("answers"))
+      : [];
+    answers = answers.map((answer) => {
+      if (answer.id === payload.id) {
+        return payload;
+      }
+      return answer;
+    });
+    localStorage.setItem("answers", JSON.stringify(answers));
+    if (userId) {
+      answers = answers.filter((answer) => answer.user_id === userId);
+    }
+    dispatch({ type: EDIT_QUIZ_IN_SUCCESS, payload: answers });
+    return true;
+  } catch (error) {
+    dispatch({
+      type: EDIT_QUIZ_IN_FAILURE,
+      error: "Something went wrong!! Please try again later",
+    });
   }
 }
 

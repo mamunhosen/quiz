@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react";
 
-import { getQuizQuestions, submitQuiz, getAnswers } from "../../Context";
+import {
+  getQuizQuestions,
+  submitQuiz,
+  useAnswerState,
+  useAnswerDispatch,
+} from "../../Context";
 import { useForm } from "../../Utils/react-utils";
 import { uuid } from "../../Utils/utils";
 import Modal from "../Modal";
 
 import "./playquiz.css";
 
-const PlayQuiz = ({ user, answerDispatch }) => {
-  const [quizes, setQuizes] = useState([]);
+const PlayQuiz = ({ user }) => {
+  const dispatch = useAnswerDispatch();
+  const { quizes } = useAnswerState();
   const [isOpen, setIsOpen] = useState(false);
-  const [submit, setSubmit] = useState(false);
-
   const validateQuestionForm = (values) => {
     const errors = {};
     for (const property in values) {
@@ -31,13 +35,11 @@ const PlayQuiz = ({ user, answerDispatch }) => {
         question_id: quiz.id,
         answer: answers[quiz.id],
         user_id: user.id,
+        editHistories: [],
       };
     });
-    const response = await submitQuiz(payload);
+    const response = await submitQuiz(payload, dispatch, user);
     if (response) {
-      const user_id = user.isAdmin ? "" : user.id;
-      getAnswers(answerDispatch, user_id);
-      setSubmit(true);
       setIsOpen(false);
     }
   };
@@ -57,10 +59,9 @@ const PlayQuiz = ({ user, answerDispatch }) => {
 
   useEffect(() => {
     (async () => {
-      const quizQues = await getQuizQuestions(user.id);
-      setQuizes(quizQues);
+      await getQuizQuestions(user.id, dispatch);
     })();
-  }, [submit]);
+  }, []);
 
   const renderQuizContent = () => {
     return quizes.map((quiz, index) => (
@@ -109,7 +110,3 @@ const PlayQuiz = ({ user, answerDispatch }) => {
 };
 
 export default PlayQuiz;
-
-{
-  /* <input type="submit" value="Add" className="btn-submit question-submit--btn"/> */
-}

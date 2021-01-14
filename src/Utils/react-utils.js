@@ -8,7 +8,6 @@ export const useForm = (
 ) => {
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState({});
-
   const validateProperty = ({ name, value }) => {
     const obj = { [name]: value };
     const errorObj = validate(obj);
@@ -35,6 +34,7 @@ export const useForm = (
   const onSubmit = (e) => {
     e.preventDefault();
     const errorsObj = validate(values);
+
     if (Object.keys(errorsObj).length === 0) {
       callback(values);
       if (clearField) {

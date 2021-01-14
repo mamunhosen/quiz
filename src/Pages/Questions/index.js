@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Modal from "../../Components/Modal";
 import { useForm } from "../../Utils/react-utils";
+import { uuid } from "../../Utils/utils";
 import {
   getQuestions,
   addQuestion,
@@ -27,7 +28,7 @@ const Questions = () => {
   };
 
   const doSubmit = async ({ question }) => {
-    const payload = { id: new Date().getUTCMilliseconds(), title: question };
+    const payload = { id: uuid(), title: question };
     const response = await addQuestion(dispatch, payload);
     if (response.length > 0) {
       setIsOpen(false);

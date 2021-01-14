@@ -14,7 +14,7 @@ const users = [
     isAdmin: true,
   },
   {
-    id: 2,
+    id: 3,
     name: "another user",
     email: "another@gmail.com",
     password: "another@123",
